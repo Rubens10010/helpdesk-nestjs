@@ -70,10 +70,6 @@ constructor(private readonly taskService: TaskService) {}
 - Writing public async functions in controller -> use service functions -> service uses repository functions.
 - Transform all responses to DTO objects.
 
-# front end
-
-$ npm create react-app task-managment-frontend --template typescript
-
 # enable cors
 
 - in main.ts
