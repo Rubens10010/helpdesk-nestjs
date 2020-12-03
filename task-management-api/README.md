@@ -21,9 +21,9 @@
 
 ```
 "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js --config src/ormconfig.ts",
-    "typeorm:migrate": "yarn typeorm migration:generate -n",
-    "typeorm:run": "yarn typeorm migration:run",
-    "typeorm:revert": "yarn typeorm migration:revert"
+"typeorm:migrate": "yarn typeorm migration:generate -n",
+"typeorm:run": "yarn typeorm migration:run",
+"typeorm:revert": "yarn typeorm migration:revert"
 ```
 
 - run: npm run typeorm:migrate Init
