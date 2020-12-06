@@ -1,9 +1,9 @@
 import { Controller, Get, UseGuards, Req, Res, Post, HttpCode } from '@nestjs/common';
 import { Response } from 'express';
 import { AuthService } from './auth.service';
-import { GoogleAuthGuard } from './googleAuth.guard';
-import { JwtAuthGuard } from './jwt-auth.guard';
-import JwtRefreshGuard from './jwtRefresh.guard';
+import { GoogleAuthGuard } from './guards/googleAuth.guard';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import JwtRefreshGuard from './guards/jwtRefresh.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -43,6 +43,7 @@ export class AuthController {
   authenticate(@Req() request) {
     const user = request.user;
     user.google_id = "hidden";
+    user.refresh_token = null;
     return user;
   }
 
