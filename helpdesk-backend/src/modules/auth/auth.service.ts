@@ -2,12 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { UsersService } from 'src/modules/users/users.service';
 import { UpdateUserAccountDTO } from '../users/dtos/UpdateUserAccountDTO';
 import { JwtService } from '@nestjs/jwt';
+import { ConfigService, Configuration } from 'src/config';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly usersService: UsersService,
-    private jwtService: JwtService,
+    private readonly jwtService: JwtService,
+    private readonly configService: ConfigService
   ) {}
 
   async validateUser(google_profile: any, refresh_token: string): Promise<any> {
@@ -39,8 +41,14 @@ export class AuthService {
 
   async login(user: any) {
     const payload = { name: user.name, sub: user.google_id };
-    return {
+    /*return {
       access_token: this.jwtService.sign(payload),
-    };
+    };*/
+    const token = this.jwtService.sign(payload);
+    return `Authentication=${token}; HttpOnly; Path=/; Max-Age=${this.configService.get(Configuration.JWT_EXPIRATION_TIME)}`;
+  }
+
+  public getCookieForLogOut() {
+    return `Authentication=; HttpOnly; Path=/; Max-Age=0`;
   }
 }

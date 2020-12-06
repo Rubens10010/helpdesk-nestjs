@@ -5,16 +5,21 @@ import { GoogleStrategy } from './google.strategy';
 import { UsersModule } from 'src/modules/users/users.module';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
-import { jwtConstants } from './constants';
 import { JwtStrategy } from './jwt.strategy';
+import { ConfigModule, ConfigService, Configuration} from '../../config';
 
 @Module({
   imports: [
     UsersModule,
     PassportModule,
-    JwtModule.register({
-      secret: jwtConstants.secret,
-      signOptions: { expiresIn: '60s' },
+    ConfigModule,
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => ({
+        secret: configService.get(Configuration.JWT_SECRET),
+        signOptions: { expiresIn: `${configService.get(Configuration.JWT_EXPIRATION_TIME)}s` },
+      })
     }),
   ],
   providers: [AuthService, GoogleStrategy, JwtStrategy],

@@ -37,6 +37,10 @@ nest g class user/entities/user.entity --no-spec
 - add to main.ts: import 'dotenv/config';
 - call variables: process.env.API_PORT
 
+# .env using nestjs ConfigModule
+
+- npm install @nestjs/config
+
 # database
 
 - npm i --save @nestjs/typeorm typeorm pg
@@ -108,7 +112,28 @@ public async getOne(userId: number) {
 npm install class-validator --save
 validate DTOs
 
+# Passport authentication
+npm install @nestjs/passport passport
+
 # JWT functionality
 
 $ npm install --save @nestjs/jwt passport-jwt
 $ npm install --save-dev @types/passport-jwt
+$ npm install cookie-parser @types/cookie-parser
+$ Install strategy of authentication for google
+$ Install JWT generation
+- Manage JWT with cookies by placing in controller login method for google auth.
+- npm i cookie-parser --save
+```
+@Get('google/callback')
+  @UseGuards(GoogleAuthGuard)
+  async googleAuthRedirect(@Req() req, @Res() response: Response) {
+    const {user} = req;
+    const cookie = await this.authService.login(user);
+    response.setHeader('Set-Cookie', cookie);
+    console.log(user);
+    return response.send(user);
+    //This will return an acces_token only if is validated
+    //return this.authService.login(req.user);
+  }
+```

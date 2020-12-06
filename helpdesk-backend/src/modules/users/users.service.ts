@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/entity/user.entity';
 import { UserRepository } from './users.repository';
@@ -49,5 +49,18 @@ export class UsersService {
     if (!user) throw new NotFoundException("User doesn't exists");
     const editedUser = Object.assign(user, dto);
     return await this.userRepository.save(editedUser);
+  }
+
+  getAllUsers() {
+    return this.userRepository.find();
+  }
+
+  async getByGoogleId(google_id: string){
+    const user = await this.userRepository.findOne({google_id});
+
+    if(!user) {
+      throw new HttpException("User with this id doesn't exists ", HttpStatus.NOT_FOUND);
+    }
+    return user;
   }
 }
