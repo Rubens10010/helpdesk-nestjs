@@ -2,10 +2,8 @@
 
 # Backend port 3000
 
-- cd task-management-api
-- stop postgresql service
-- docker-compose -f docs/task-management-compose.yml up -d
-- go to http://localhost:8888/ then login user:postgres pw:123456
+- cd helpdesk-backend
+- cp .env.example .env | nano .env
 - npm install
 - npm run typeorm:migrate Init
 - npm run typeorm:run
