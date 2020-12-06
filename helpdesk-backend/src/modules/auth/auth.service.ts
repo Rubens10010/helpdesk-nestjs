@@ -3,6 +3,7 @@ import { UsersService } from 'src/modules/users/users.service';
 import { UpdateUserAccountDTO } from '../users/dtos/UpdateUserAccountDTO';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService, Configuration } from 'src/config';
+import { User } from 'src/entity/user.entity';
 
 @Injectable()
 export class AuthService {
@@ -39,16 +40,40 @@ export class AuthService {
     }
   }
 
-  async login(user: any) {
-    const payload = { name: user.name, sub: user.google_id };
-    /*return {
-      access_token: this.jwtService.sign(payload),
-    };*/
+  // Get Access Token Cookie
+  async login(user: User) {
+    const payload: TokenPayload = { name: user.name, sub: user.id };
+
     const token = this.jwtService.sign(payload);
     return `Authentication=${token}; HttpOnly; Path=/; Max-Age=${this.configService.get(Configuration.JWT_EXPIRATION_TIME)}`;
   }
 
-  public getCookieForLogOut() {
-    return `Authentication=; HttpOnly; Path=/; Max-Age=0`;
+  public getCookiesForLogOut() {
+    return [
+      'Authentication=; HttpOnly; Path=/; Max-Age=0',
+      'Refresh=; HttpOnly; Path=/; Max-Age=0'
+    ];
+  }
+
+  public getCookieWithJwtRefreshToken(user: User) {
+    const payload: TokenPayload = { name: user.name, sub: user.id };
+    const token = this.jwtService.sign(payload, {
+      secret: this.configService.get('JWT_REFRESH_TOKEN_SECRET'),
+      expiresIn: `${this.configService.get('JWT_REFRESH_TOKEN_EXPIRATION_TIME')}s`
+    });
+    const cookie = `Refresh=${token}; HttpOnly; Path=/; Max-Age=${this.configService.get('JWT_REFRESH_TOKEN_EXPIRATION_TIME')}`;
+    return {
+      cookie,
+      token
+    }
+  }
+
+  async saveUserRefreshToken(refreshToken: string, id: number)
+  {
+    await this.usersService.setCurrentRefreshToken(refreshToken, id)
+  }
+
+  async removeUserRefreshToken(id: number){
+    await this.usersService.removeRefreshToken(id);
   }
 }

@@ -6,6 +6,7 @@ import {
   UpdateDateColumn,
   BaseEntity,
 } from 'typeorm';
+//import { Exclude } from 'class-transformer';
 
 export enum UserStatus {
   Deleted = 0,
@@ -27,7 +28,8 @@ export class User extends BaseEntity {
   google_id: string;
 
   @Column({ nullable: true, length: 191 })
-  refresh_token: string;
+  //@Exclude() 
+  refresh_token?: string;
 
   @Column({ nullable: true, length: 100 })
   photo_url: string;

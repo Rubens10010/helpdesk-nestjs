@@ -137,3 +137,7 @@ $ Install JWT generation
     //return this.authService.login(req.user);
   }
 ```
+- Los tokens se envian via cookie al browser del usuario
+- El front-end debe recibir los tokens y almacenarlos persistentemente para poder hacer las siguientes request hasta que la cookie sea invalida.
+- Una vez sea invalida se debe refrescar el token.
+- npm i bcrypt --save

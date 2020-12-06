@@ -1,4 +1,4 @@
 interface TokenPayload {
-    sub: string;
+    sub: number;    // google-id
     name: string,
 }

@@ -19,7 +19,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: TokenPayload) {
-    //return { google_id: payload.sub, name: payload.name };
-    return this.usersService.getByGoogleId(payload.sub);
+    return this.usersService.getById(payload.sub);
   }
 }

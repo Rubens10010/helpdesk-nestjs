@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/entity/user.entity';
 import { UserRepository } from './users.repository';
 import { UpdateUserAccountDTO } from './dtos/UpdateUserAccountDTO';
+const bcrypt = require('bcrypt');
 
 @Injectable()
 export class UsersService {
@@ -55,12 +56,40 @@ export class UsersService {
     return this.userRepository.find();
   }
 
-  async getByGoogleId(google_id: string){
-    const user = await this.userRepository.findOne({google_id});
+  async getById(id: number){
+    const user = await this.userRepository.findOne({id});
 
     if(!user) {
       throw new HttpException("User with this id doesn't exists ", HttpStatus.NOT_FOUND);
     }
     return user;
+  }
+
+  async setCurrentRefreshToken(refreshToken: string, userId: number) {
+    const refresh_token = await bcrypt.hash(refreshToken, 10);
+    await this.userRepository.update(userId, {
+      refresh_token
+    });
+  }
+
+  async getUserIfRefreshTokenMatches(refreshToken: string, id: number) {
+    const user = await this.getById(id);
+ 
+    const isRefreshTokenMatching = await bcrypt.compare(
+      refreshToken,
+      user.refresh_token
+    );
+ 
+    if (isRefreshTokenMatching) {
+      return user;
+    }
+
+    return null;
+  }
+
+  async removeRefreshToken(id: number) {
+    return this.userRepository.update(id, {
+      refresh_token: null
+    });
   }
 }
