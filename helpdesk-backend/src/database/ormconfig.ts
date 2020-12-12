@@ -1,18 +1,18 @@
 import { ConnectionOptions } from 'typeorm';
-import { Configuration } from 'src/config/config.keys';
-import { ConfigService } from 'src/config/config.service';
+import { ConfigService } from '@nestjs/config'
 
 const configService = new ConfigService();
+
 const config: ConnectionOptions = {
   type: 'postgres' as 'postgres',
-  host: configService.get(Configuration.HOST),
-  username: configService.get(Configuration.USERNAME),
-  password: configService.get(Configuration.PASSWORD),
-  port: parseInt(configService.get(Configuration.DB_PORT)),
+  host: configService.get('DATABASE_HOST'),
+  username: configService.get('DATABASE_USERNAME'),
+  password: configService.get('DATABASE_PASSWORD'),
+  port: parseInt(configService.get('DATABASE_PORT')),
   entities: [__dirname + '/../**/*.entity{.ts,.js}'],
   migrations: [__dirname + '/migrations/*{.ts,.js}'],
 
-  database: 'helpdesk',
+  database: configService.get<string>('DATABASE_NAME'),
   synchronize: false,
 
   // Run migrations automatically,

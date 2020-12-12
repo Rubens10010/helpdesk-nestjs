@@ -23,10 +23,11 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     profile: any,
     done: VerifyCallback,
   ): Promise<any> {
+    const userGoogleInfo: UserGoogleInfo = this.authService.getUserInfoFromGoogleProfile(profile, refreshToken);
     const validatedUser: User = await this.authService.validateUser(
-      profile,
-      refreshToken,
+      userGoogleInfo
     );
+
     if (!validatedUser) {
       throw new UnauthorizedException();
     }

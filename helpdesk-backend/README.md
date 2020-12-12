@@ -75,7 +75,7 @@ https://github.com/typeorm/typeorm/blob/master/docs/migrations.md
 - first create database in postgres
 - Next we will generate migrations folder and generate first migration "init"
 - This will generate migration init automatically from changes made to entities
-- npm run typeorm:migrate Init
+- npm run typeorm:migrate MigrationName
 - Run the first migration
 - npm run typeorm:run
 - This will create users table in db
@@ -141,3 +141,32 @@ $ Install JWT generation
 - El front-end debe recibir los tokens y almacenarlos persistentemente para poder hacer las siguientes request hasta que la cookie sea invalida.
 - Una vez sea invalida se debe refrescar el token.
 - npm i bcrypt --save
+
+# Configuration .env
+- npm i --save @nestjs/config
+- in app module:
+- import files:
+- import {ConfigModule, ConfigService} from '@nestjs/config'
+```
+ConfigModule.forRoot({
+      load: [configuration],
+      isGlobal: true,
+    }),
+```
+- validation:
+$ npm install --save @hapi/joi
+$ npm install --save-dev @types/hapi__joi
+- use joi to validate conf in app.module.ts:
+- import * as Joi from '@hapi/joi';
+```
+ConfigModule.forRoot({
+      validationSchema: Joi.object({
+        NODE_ENV: Joi.string()
+          .valid('development', 'production', 'test', 'provision')
+          .default('development'),
+        PORT: Joi.number().default(3000),
+      }),
+    }),
+```
+- Se puede usar asi:
+- configService.get('database.host')
