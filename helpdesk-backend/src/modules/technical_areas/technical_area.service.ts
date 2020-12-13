@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Colaborator } from 'src/entity/colaborator.entity';
 import { TechnicalArea, TechnicalAreaStatus } from 'src/entity/technical_area.entity';
 import { CreateTechAreaDTO } from './dtos/create-techarea.dto';
 import { UpdateTechAreaDTO } from './dtos/update-techarea.dto';
@@ -53,7 +54,6 @@ export class TechnicalAreaService {
   }*/
 
   public async updateOne(taskId: number, updateTechAreaRequest: UpdateTechAreaDTO) {
-    console.log(updateTechAreaRequest);
     // fetch and check if task exists.
     const techArea: TechnicalArea = await this.getOne(taskId);
 
@@ -73,5 +73,10 @@ export class TechnicalAreaService {
   public async deleteOne(id: number) {
     const techArea: TechnicalArea = await this.getOne(id);
     await this.technicalAreaRepository.remove(techArea);
+  }
+
+  public async getColaborators(techAreaID: number): Promise<Colaborator[]>{
+    const technicalArea: TechnicalArea = await this.technicalAreaRepository.findOne(techAreaID, { relations: ['colaborators']});
+    return technicalArea.colaborators;
   }
 }

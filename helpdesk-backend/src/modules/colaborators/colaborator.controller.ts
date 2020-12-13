@@ -7,7 +7,7 @@ import { UpdateColaboratorDTO } from './dtos/update-colaborator.dto';
 
 @Controller('colaborator')
 export class ColaboratorController {
-  constructor(private readonly colaboratorService: ColaboratorService, private readonly userService: UsersService, private readonly technicalAreaService: TechnicalAreaService){}
+  constructor(private readonly colaboratorService: ColaboratorService/*, private readonly userService: UsersService, private readonly technicalAreaService: TechnicalAreaService*/){}
 
   @Get()
   getAll() {
@@ -22,10 +22,11 @@ export class ColaboratorController {
 
   @Post()
   public async createOne(@Body() createColaboratorRequest: CreateColaboratorDTO) {
-    const user = await this.userService.getById(createColaboratorRequest.user_id);
+    /*const user = await this.userService.getById(createColaboratorRequest.user_id);
     const tech_area = await this.technicalAreaService.getOne(createColaboratorRequest.technical_area_id);
 
-    const resp = await this.colaboratorService.createOne(createColaboratorRequest, user, tech_area);
+    const resp = await this.colaboratorService.createOne(createColaboratorRequest, user, tech_area);*/
+    const resp = await this.colaboratorService.createOne(createColaboratorRequest);
 
     return resp;
   }

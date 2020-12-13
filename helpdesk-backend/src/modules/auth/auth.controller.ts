@@ -1,4 +1,4 @@
-import { Controller, Get, UseGuards, Req, Res, Post, HttpCode } from '@nestjs/common';
+import { Controller, Get, UseGuards, Req, Res, Post, HttpCode, ClassSerializerInterceptor, UseInterceptors } from '@nestjs/common';
 import { Response } from 'express';
 import { AuthService } from './auth.service';
 import { GoogleAuthGuard } from './guards/googleAuth.guard';
@@ -6,6 +6,7 @@ import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import JwtRefreshGuard from './guards/jwtRefresh.guard';
 
 @Controller('auth')
+@UseInterceptors(ClassSerializerInterceptor)
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
@@ -26,7 +27,8 @@ export class AuthController {
   @UseGuards(GoogleAuthGuard)
   async loginCallback(@Req() req, @Res() response: Response) {
     const {user} = req;
-    
+    user.google_id = "hidden";
+
     // access token cookie
     const accessTokenCookie = await this.authService.getAccessTokenForLogInUser(user);
     // refresh token-cookie

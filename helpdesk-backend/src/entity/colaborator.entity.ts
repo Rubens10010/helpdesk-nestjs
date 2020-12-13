@@ -11,7 +11,6 @@ import {
   } from 'typeorm';
 import { TechnicalArea } from './technical_area.entity';
 import { User } from './user.entity';
-  //import { Exclude } from 'class-transformer';
   
   export enum ColaboratorStatus {
     Deleted = 0,
@@ -26,10 +25,6 @@ import { User } from './user.entity';
     @OneToOne(type => User)
     @JoinColumn({ name: 'user_id' })
     profile: User
-
-    @ManyToOne(type => TechnicalArea)
-    @JoinColumn({ name: 'technical_area_id' })
-    technical_area: TechnicalArea
   
     @Column({ type: 'varchar', nullable: false, length: 191 })
     nickname: string;
@@ -48,5 +43,13 @@ import { User } from './user.entity';
   
     @UpdateDateColumn({ name: 'updated_at' })
     updated_at: Date;
+
+    // n:1 relation with technical areas
+    @ManyToOne(
+      type => TechnicalArea,
+      technicalArea => technicalArea.colaborators
+    )
+    @JoinColumn({ name: 'technical_area_id' })
+    technical_area: TechnicalArea
   }
   

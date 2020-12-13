@@ -1,7 +1,7 @@
 export class CreateColaboratorDTO {
-    nickname: string;
-    available?: boolean;
-    lead?: boolean;
-    user_id: number;
-    technical_area_id: number;
+    readonly nickname: string;
+    readonly available?: boolean;
+    readonly lead?: boolean;
+    readonly user_id: number;
+    readonly technical_area_id: number;
 }

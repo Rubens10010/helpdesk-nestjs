@@ -1,6 +1,7 @@
 import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/entity/user.entity';
+import { CreateUserDto } from './dtos';
 import { UserRepository } from './users.repository';
 const bcrypt = require('bcrypt');
 
@@ -92,5 +93,15 @@ export class UsersService {
     return this.userRepository.update(id, {
       refresh_token: null
     });
+  }
+
+  async createOne(createUserRequest: CreateUserDto){
+    const user: User = new User();
+    user.name = createUserRequest.name;
+    user.email = createUserRequest.email;
+
+    await this.userRepository.save(user);
+
+    return user;
   }
 }

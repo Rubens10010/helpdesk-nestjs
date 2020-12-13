@@ -12,8 +12,8 @@ import { ColaboratorService } from './colaborator.service';
 
 @Module({
     controllers: [ColaboratorController],
-    providers: [ColaboratorService, UsersService, TechnicalAreaService],
+    providers: [ColaboratorService/*, UsersService, TechnicalAreaService*/],
     exports: [ColaboratorService],
-    imports: [TypeOrmModule.forFeature([Colaborator,User,TechnicalArea])],
+    imports: [TypeOrmModule.forFeature([Colaborator/*,User,TechnicalArea*/])],
   })
 export class ColaboratorModule {}

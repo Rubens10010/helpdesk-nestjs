@@ -27,13 +27,16 @@ export class ColaboratorService {
     return colaborator;
   }
 
-  public async createOne(createColaboratoRequest: CreateColaboratorDTO, user: User, tech_area: TechnicalArea) {
+  public async createOne(createColaboratoRequest: CreateColaboratorDTO/*, user: User, tech_area: TechnicalArea*/) {
+    const user: User = await User.findOne(createColaboratoRequest.user_id);
+    const technicalArea: TechnicalArea = await TechnicalArea.findOne(createColaboratoRequest.technical_area_id);
+
     const colaborator: Colaborator = new Colaborator();
     colaborator.nickname = createColaboratoRequest.nickname;
     colaborator.available = createColaboratoRequest.available || false;
     colaborator.lead = createColaboratoRequest.lead || false;
     colaborator.profile = user;
-    colaborator.technical_area = tech_area;
+    colaborator.technical_area = technicalArea;
     await this.colaboratorRepository.save(colaborator);
     return colaborator;
   }

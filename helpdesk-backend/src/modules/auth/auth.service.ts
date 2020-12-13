@@ -37,13 +37,12 @@ export class AuthService {
    * @param refresh_token refresh token for user provided by google.
    */
   async validateUser(userGoogleInfo: UserGoogleInfo): Promise<any> {
-
-    //const userGoogleInfo = this.getUserInfoFromGoogleProfile(google_profile, refresh_token);
     const user = await this.usersService.findOneByEmail(userGoogleInfo.email);
     if (!user) {
       return null;
     }
 
+    // No mostrar el refreshToken porque sera cambiado
     if (user.google_id && user.google_id === userGoogleInfo.google_id) {
       const { refresh_token, ...result } = user;
       return result;

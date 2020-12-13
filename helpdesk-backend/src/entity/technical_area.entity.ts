@@ -30,6 +30,7 @@ import { Colaborator } from './colaborator.entity';
     @Column({ nullable: false, default: TechnicalAreaStatus.Created })
     status: TechnicalAreaStatus;
 
+    // 1:n relation with colaborators
     @OneToMany(type => Colaborator, colaborator => colaborator.technical_area)
     colaborators: Colaborator[];
   }

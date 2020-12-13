@@ -3,7 +3,6 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
-//import { ConfigModule, ConfigService, Configuration} from './config';
 import {ConfigModule} from '@nestjs/config'
 import { DatabaseModule } from './database/database.module';
 import { TechnicalAreaModule } from './modules/technical_areas/technical_area.module';
@@ -27,7 +26,7 @@ import { ColaboratorModule } from './modules/colaborators/colaborator.module';
     UsersModule,
     AuthModule,
     TechnicalAreaModule,
-    ColaboratorModule
+    ColaboratorModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Body, Put, Post, Delete, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Param, Body, Put, Post, Delete, HttpCode, HttpStatus, ParseIntPipe } from '@nestjs/common';
 import { CreateTechAreaDTO } from './dtos/create-techarea.dto';
 import { UpdateTechAreaDTO } from './dtos/update-techarea.dto';
 import { TechnicalAreaService } from './technical_area.service';
@@ -38,5 +38,11 @@ export class TechnicalAreaController {
   @HttpCode(HttpStatus.NO_CONTENT)
   public async deleteOne(@Param('id') taskId: number) {
     await this.technicalAreaService.deleteOne(taskId);
+  }
+
+  @Get('/:id/colaborators')
+  public getBooks( @Param('id', ParseIntPipe) colaboratorID: number ) {
+    const resp = this.technicalAreaService.getColaborators(colaboratorID);
+    return resp;
   }
 }

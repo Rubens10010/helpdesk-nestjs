@@ -5,8 +5,10 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   BaseEntity,
+  OneToOne,
 } from 'typeorm';
-//import { Exclude } from 'class-transformer';
+import { Exclude } from 'class-transformer';
+import { Colaborator } from './colaborator.entity';
 
 export enum UserStatus {
   Deleted = 0,
@@ -25,10 +27,11 @@ export class User extends BaseEntity {
   email: string;
 
   @Column({ nullable: true, length: 40, unique: true })
+  @Exclude() 
   google_id: string;
 
   @Column({ nullable: true, length: 191 })
-  //@Exclude() 
+  @Exclude() 
   refresh_token?: string;
 
   @Column({ nullable: true, length: 100 })
@@ -42,4 +45,7 @@ export class User extends BaseEntity {
 
   @UpdateDateColumn({ name: 'updated_at' })
   updated_at: Date;
+
+  @OneToOne(type => Colaborator)
+  colaborator: Colaborator
 }
