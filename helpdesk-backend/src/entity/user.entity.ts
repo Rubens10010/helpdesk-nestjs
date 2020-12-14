@@ -6,9 +6,11 @@ import {
   UpdateDateColumn,
   BaseEntity,
   OneToOne,
+  OneToMany,
 } from 'typeorm';
 import { Exclude } from 'class-transformer';
 import { Colaborator } from './colaborator.entity';
+import { Solution } from './solution.entity';
 
 export enum UserStatus {
   Deleted = 0,
@@ -48,4 +50,10 @@ export class User extends BaseEntity {
 
   @OneToOne(type => Colaborator)
   colaborator: Colaborator
+
+  @OneToMany(
+    type => Solution,
+    solution => solution.proposer
+  )
+  solutions: Solution[];
 }

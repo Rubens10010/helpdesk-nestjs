@@ -2,51 +2,32 @@ import {
     Entity,
     PrimaryGeneratedColumn,
     Column,
-    CreateDateColumn,
-    UpdateDateColumn,
     BaseEntity,
     OneToOne,
+    JoinColumn,
+    ManyToOne,
   } from 'typeorm';
-  import { Exclude } from 'class-transformer';
-  import { Colaborator } from './colaborator.entity';
-  
-  export enum UserStatus {
-    Deleted = 0,
-    Created = 1,
-  }
-  
-  @Entity('problems')
-  export class Problem extends BaseEntity {
+import { TechnicalArea, SoftwareProgram } from './index';
+
+@Entity('problems')
+export class Problem extends BaseEntity {
     @PrimaryGeneratedColumn('increment')
     id: number;
-  
-    @Column({ type: 'varchar', nullable: false, length: 191 })
-    name: string;
-  
+
     @Column({ type: 'varchar', nullable: false, length: 191, unique: true })
-    email: string;
-  
-    @Column({ nullable: true, length: 40, unique: true })
-    @Exclude() 
-    google_id: string;
-  
-    @Column({ nullable: true, length: 191 })
-    @Exclude() 
-    refresh_token?: string;
-  
-    @Column({ nullable: true, length: 100 })
-    photo_url: string;
-  
-    @Column({ nullable: false, default: UserStatus.Created })
-    status: UserStatus;
-  
-    @CreateDateColumn({ name: 'created_at' })
-    created_at: Date;
-  
-    @UpdateDateColumn({ name: 'updated_at' })
-    updated_at: Date;
-  
-    @OneToOne(type => Colaborator)
-    colaborator: Colaborator
-  }
-  
+    title: string;
+
+    @Column({ type: 'text', nullable: false })
+    description: string;
+
+    @OneToOne(type => TechnicalArea)
+    @JoinColumn({ name: 'technical_area_id' })
+    technical_area: TechnicalArea
+
+    @ManyToOne(
+        type => SoftwareProgram,
+        softwareProgram => softwareProgram.problems
+      )
+    @JoinColumn({ name: 'software_program_id' })
+    software_program: SoftwareProgram
+}

@@ -6,6 +6,7 @@ import {
     OneToMany,
   } from 'typeorm';
 import { Colaborator } from './colaborator.entity';
+import { Movement } from './movement.entity';
   //import { Exclude } from 'class-transformer';
   
   export enum TechnicalAreaStatus {
@@ -33,5 +34,11 @@ import { Colaborator } from './colaborator.entity';
     // 1:n relation with colaborators
     @OneToMany(type => Colaborator, colaborator => colaborator.technical_area)
     colaborators: Colaborator[];
+
+    @OneToMany(
+      type => Movement,
+      movement => movement.colaborator
+    )
+    movements: Movement[];
   }
   

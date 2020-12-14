@@ -8,7 +8,9 @@ import {
     JoinColumn,
     OneToOne,
     ManyToOne,
+    OneToMany,
   } from 'typeorm';
+import { Movement } from './movement.entity';
 import { TechnicalArea } from './technical_area.entity';
 import { User } from './user.entity';
   
@@ -25,7 +27,7 @@ import { User } from './user.entity';
     @OneToOne(type => User)
     @JoinColumn({ name: 'user_id' })
     profile: User
-  
+
     @Column({ type: 'varchar', nullable: false, length: 191 })
     nickname: string;
   
@@ -51,5 +53,11 @@ import { User } from './user.entity';
     )
     @JoinColumn({ name: 'technical_area_id' })
     technical_area: TechnicalArea
+
+    @OneToMany(
+      type => Movement,
+      movement => movement.colaborator
+    )
+    movements: Movement[];
   }
   

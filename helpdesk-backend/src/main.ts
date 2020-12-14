@@ -5,7 +5,6 @@ import * as cookieParser from 'cookie-parser';
 import { ConfigService } from '@nestjs/config';
 import { ValidationPipe } from '@nestjs/common';
 import 'reflect-metadata';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { initSwagger } from './app.swagger';
 
 async function bootstrap() {
