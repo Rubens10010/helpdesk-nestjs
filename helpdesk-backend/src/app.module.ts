@@ -9,6 +9,7 @@ import { TechnicalAreaModule } from './modules/technical_areas/technical_area.mo
 import configuration from './config/configuration';
 import * as Joi from '@hapi/joi';
 import { ColaboratorModule } from './modules/colaborators/colaborator.module';
+import { ProblemsModule } from './modules/problems/problems.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { ColaboratorModule } from './modules/colaborators/colaborator.module';
     AuthModule,
     TechnicalAreaModule,
     ColaboratorModule,
+    ProblemsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

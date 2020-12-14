@@ -1,8 +1,10 @@
 import { Controller, Req, UseGuards, Get, UseInterceptors, ClassSerializerInterceptor, Post, Body } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CreateUserDto } from './dtos';
 import { UsersService } from './users.service';
 
+@ApiTags('User')
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('user')
 export class UsersController {

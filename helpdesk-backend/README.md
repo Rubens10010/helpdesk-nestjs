@@ -111,6 +111,7 @@ public async getOne(userId: number) {
 
 npm install class-validator --save
 validate DTOs
+import {} from 'class-validator'
 
 # Passport authentication
 npm install @nestjs/passport passport
@@ -170,3 +171,8 @@ ConfigModule.forRoot({
 ```
 - Se puede usar asi:
 - configService.get('database.host')
+
+# SWAGGER
+$ npm install --save @nestjs/swagger swagger-ui-express
+- extender dtos:
+- import { PartialType } from "@nestjs/mapped-types";

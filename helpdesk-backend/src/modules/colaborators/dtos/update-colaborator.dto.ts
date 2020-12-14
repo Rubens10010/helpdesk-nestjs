@@ -1,7 +1,7 @@
-export class UpdateColaboratorDTO {
-    nickname?: string;
-    available?: boolean;
-    lead?: boolean;
-    user_id?: number;
-    technical_area_id?: number;
-}
+import { PartialType } from "@nestjs/mapped-types";
+import { OmitType } from "@nestjs/swagger";
+import { CreateColaboratorDTO } from "./create-colaborator.dto";
+
+export class UpdateColaboratorDTO extends PartialType(
+    OmitType(CreateColaboratorDTO, ['lead'] as const)
+) {}
