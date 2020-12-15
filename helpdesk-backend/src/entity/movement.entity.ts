@@ -28,7 +28,7 @@ export class Movement extends BaseEntity {
 
     @OneToOne(type => Movement)
     @JoinColumn({ name: 'last_id' })
-    last_id: Movement
+    parent: Movement
 
     @OneToOne(type => Movement)
     child: Movement

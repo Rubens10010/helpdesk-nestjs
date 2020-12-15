@@ -70,12 +70,6 @@ export class ColaboratorService {
   }
 
   public async deleteOne(id: number) {
-    /*const colaborator: Colaborator = await this.getOne(id);
-    if(!colaborator){
-      return null;
-    }
-
-    return await this.colaboratorRepository.remove(colaborator);*/
     return await this.colaboratorRepository.delete(id);
   }
 }

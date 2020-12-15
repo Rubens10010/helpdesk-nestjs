@@ -73,7 +73,7 @@ export class Ticket extends BaseEntity {
     channel: TicketChannel;
 
     @Column({ type: 'boolean',  default: false })
-    scaled: number;
+    scaled: boolean;
 
     @OneToMany(
         type => Problem,

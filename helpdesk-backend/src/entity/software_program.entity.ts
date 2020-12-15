@@ -15,7 +15,7 @@ export class SoftwareProgram extends BaseEntity {
     @Column({ type: 'varchar', nullable: false, length: 191 })
     name: string;
 
-    @Column({ type: 'varchar', nullable: false, length: 100 })
+    @Column({ type: 'varchar', nullable: false, length: 20 })
     version: string;
 
     @Column({ type: 'varchar', nullable: false, length: 255 })

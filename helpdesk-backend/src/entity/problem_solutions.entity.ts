@@ -34,8 +34,8 @@ export class ProblemSolutions extends BaseEntity {
     @Column({ type: 'boolean', default: false })
     prefered: boolean;
 
-    @Column({ type: 'integer', default: 1 })
-    rank: boolean;
+    @Column({ type: 'integer', default: 0 })
+    rank: number;
 
     @CreateDateColumn({ name: 'created_at' })
     created_at: Date;
