@@ -3,11 +3,9 @@ import {
     PrimaryGeneratedColumn,
     Column,
     BaseEntity,
-    OneToOne,
     JoinColumn,
     ManyToOne,
   } from 'typeorm';
-import { TechnicalArea, SoftwareProgram } from './index';
 import { User } from './user.entity';
 
 @Entity('solutions')

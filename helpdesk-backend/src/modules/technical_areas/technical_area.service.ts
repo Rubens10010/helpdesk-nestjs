@@ -35,7 +35,7 @@ export class TechnicalAreaService {
     techArea.name = createTaskRequest.name;
     techArea.phone = createTaskRequest.phone;
     techArea.email = createTaskRequest.email;
-    techArea.status = TechnicalAreaStatus.Created;
+    techArea.status = TechnicalAreaStatus.CREATED;
 
     await this.technicalAreaRepository.save(techArea);
 
@@ -61,7 +61,8 @@ export class TechnicalAreaService {
     techArea.name = updateTechAreaRequest.name || techArea.name;
     techArea.email = updateTechAreaRequest.email || techArea.email;
     techArea.phone = updateTechAreaRequest.phone || techArea.phone;
-    techArea.status = updateTechAreaRequest.status;
+    techArea.status = parseInt(TechnicalAreaStatus[
+    updateTechAreaRequest.status], 10);
 
     // update the properties on the task
     await this.technicalAreaRepository.save(techArea);

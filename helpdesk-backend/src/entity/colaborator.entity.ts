@@ -15,8 +15,8 @@ import { TechnicalArea } from './technical_area.entity';
 import { User } from './user.entity';
   
   export enum ColaboratorStatus {
-    Deleted = 0,
-    Created = 1,
+    DELETED,
+    CREATED
   }
   
   @Entity('colaborators')
@@ -37,7 +37,7 @@ import { User } from './user.entity';
     @Column({ nullable: false, default: false })
     lead: boolean;
   
-    @Column({ nullable: false, default: ColaboratorStatus.Created })
+    @Column({ nullable: false, default: ColaboratorStatus.CREATED })
     status: ColaboratorStatus;
   
     @CreateDateColumn({ name: 'created_at' })

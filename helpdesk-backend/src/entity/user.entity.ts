@@ -13,8 +13,8 @@ import { Colaborator } from './colaborator.entity';
 import { Solution } from './solution.entity';
 
 export enum UserStatus {
-  Deleted = 0,
-  Created = 1,
+  DELETED,
+  CREATED,
 }
 
 @Entity('users')
@@ -39,7 +39,7 @@ export class User extends BaseEntity {
   @Column({ nullable: true, length: 100 })
   photo_url: string;
 
-  @Column({ nullable: false, default: UserStatus.Created })
+  @Column({ nullable: false, default: UserStatus.CREATED })
   status: UserStatus;
 
   @CreateDateColumn({ name: 'created_at' })

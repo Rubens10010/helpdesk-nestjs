@@ -14,11 +14,11 @@ import { Colaborator } from './colaborator.entity';
 import { TechnicalArea } from './technical_area.entity';
 
 export enum MovementCondition {
-    Created = 0,
-    Distributed = 1,
-    Accepted = 2,
-    Derived = 3,
-    Attended = 4
+    CREATED,
+    DISTRIBUTED,
+    ACCEPTED,
+    DERIVED,
+    ATTENDED
 }
 
 @Entity('movements')
@@ -44,7 +44,7 @@ export class Movement extends BaseEntity {
     @Column({ type: 'smallint', nullable: false, default: 0 })
     priority: number;
 
-    @Column({ nullable: false, default: MovementCondition.Created })
+    @Column({ nullable: false, default: MovementCondition.CREATED })
     status: MovementCondition;
 
     @CreateDateColumn({ name: 'created_at' })

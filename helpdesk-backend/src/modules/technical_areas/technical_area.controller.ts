@@ -27,17 +27,17 @@ export class TechnicalAreaController {
 
   @Put('/:id')
   public async updateOne(
-    @Param('id') taskId: number,
-    @Body() updateTaskRequest: UpdateTechAreaDTO,
+    @Param('id') id: number,
+    @Body() updateTechAreaDTO: UpdateTechAreaDTO,
   ) {
-    const resp = await this.technicalAreaService.updateOne(taskId, updateTaskRequest);
+    const resp = await this.technicalAreaService.updateOne(id, updateTechAreaDTO);
     return resp;
   }
 
   @Delete('/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  public async deleteOne(@Param('id') taskId: number) {
-    await this.technicalAreaService.deleteOne(taskId);
+  public async deleteOne(@Param('id') id: number) {
+    await this.technicalAreaService.deleteOne(id);
   }
 
   @Get('/:id/colaborators')

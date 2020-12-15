@@ -5,7 +5,6 @@ import {
     JoinColumn,
     ManyToOne,
     CreateDateColumn,
-    OneToOne,
     OneToMany,
   } from 'typeorm';
 import { Attention } from './attention.entity';

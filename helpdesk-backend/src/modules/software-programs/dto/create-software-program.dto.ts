@@ -2,7 +2,7 @@ import { IsString, MaxLength, MinLength } from "class-validator";
 
 export class CreateSoftwareProgramDto {
     @IsString()
-    @MinLength(10, {
+    @MinLength(3, {
         message: 'Name is too short',
       })
     @MaxLength(191, {

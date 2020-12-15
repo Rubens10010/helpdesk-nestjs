@@ -3,7 +3,6 @@ import {
     PrimaryGeneratedColumn,
     Column,
     BaseEntity,
-    OneToOne,
     JoinColumn,
     ManyToOne,
   } from 'typeorm';
@@ -20,7 +19,9 @@ export class Problem extends BaseEntity {
     @Column({ type: 'text', nullable: false })
     description: string;
 
-    @OneToOne(type => TechnicalArea)
+    @ManyToOne(
+      type => TechnicalArea, technicalArea => technicalArea.problems, 
+      { nullable: false })
     @JoinColumn({ name: 'technical_area_id' })
     technical_area: TechnicalArea
 

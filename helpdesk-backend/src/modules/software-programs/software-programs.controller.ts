@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Put, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Param, Delete, ParseIntPipe } from '@nestjs/common';
 import { SoftwareProgramsService } from './software-programs.service';
 import { CreateSoftwareProgramDto } from './dto/create-software-program.dto';
 import { UpdateSoftwareProgramDto } from './dto/update-software-program.dto';
@@ -18,17 +18,24 @@ export class SoftwareProgramsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id', ParseIntPipe) id: number) {
     return this.softwareProgramsService.findOne(+id);
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateSoftwareProgramDto: UpdateSoftwareProgramDto) {
+  update(@Param('id', ParseIntPipe) id: number, @Body() updateSoftwareProgramDto: UpdateSoftwareProgramDto) {
     return this.softwareProgramsService.update(+id, updateSoftwareProgramDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.softwareProgramsService.remove(+id);
+  async remove(@Param('id', ParseIntPipe) id: number) {
+    const result = await this.softwareProgramsService.remove(+id);
+
+    if(result.affected === 0) {
+      return { error: true, message: "No se elimino, no existe en la base de datos!" }
+    }
+    return {
+      message: "Eliminado exitosamente"
+    };
   }
 }

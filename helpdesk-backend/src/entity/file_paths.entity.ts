@@ -3,11 +3,9 @@ import {
     PrimaryGeneratedColumn,
     Column,
     BaseEntity,
-    OneToMany,
     OneToOne,
     CreateDateColumn,
 } from 'typeorm';
-import { Problem } from '.';
 import { Ticket } from './ticket.entity';
   
 @Entity('file_paths')

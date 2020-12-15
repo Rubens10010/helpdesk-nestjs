@@ -7,11 +7,12 @@ import {
   } from 'typeorm';
 import { Colaborator } from './colaborator.entity';
 import { Movement } from './movement.entity';
+import { Problem } from './problem.entity';
   //import { Exclude } from 'class-transformer';
   
   export enum TechnicalAreaStatus {
-    Deleted = 0,
-    Created = 1,
+    DELETED,
+    CREATED
   }
   
   @Entity('technical_areas')
@@ -28,7 +29,7 @@ import { Movement } from './movement.entity';
     @Column({ nullable: true, length: 40, unique: true })
     phone: string;
   
-    @Column({ nullable: false, default: TechnicalAreaStatus.Created })
+    @Column({ nullable: false, default: TechnicalAreaStatus.CREATED })
     status: TechnicalAreaStatus;
 
     // 1:n relation with colaborators
@@ -40,5 +41,11 @@ import { Movement } from './movement.entity';
       movement => movement.colaborator
     )
     movements: Movement[];
+
+    @OneToMany(
+      type => Problem,
+      problem => problem.technical_area
+    )
+    problems: Problem[];
   }
   

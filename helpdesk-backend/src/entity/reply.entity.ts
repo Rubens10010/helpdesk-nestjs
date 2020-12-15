@@ -11,16 +11,16 @@ import {
 import { Attention } from './attention.entity';
 
 export enum ReplyCondition {
-    Deleted = 0,
-    Created = 1,
-    Read = 2,
-    Responded = 3,
-    Last = 4
+    DELETED,
+    CREATED,
+    READ,
+    RESPONDED,
+    LAST
 }
 
 export enum ReplySource {
-    Support = 1,
-    Attendee = 2,
+    SUPPORT,
+    ATTENDEE,
 }
   
 @Entity('replies')
@@ -41,10 +41,10 @@ export class Reply extends BaseEntity {
     @Column({ type: 'text', nullable: false })
     message: string;
 
-    @Column({ nullable: false, default: ReplySource.Attendee })
+    @Column({ nullable: false, default: ReplySource.ATTENDEE })
     source: ReplySource;
 
-    @Column({ nullable: false, default: ReplyCondition.Created })
+    @Column({ nullable: false, default: ReplyCondition.CREATED })
     status: ReplyCondition;
 
     @CreateDateColumn({ name: 'created_at' })

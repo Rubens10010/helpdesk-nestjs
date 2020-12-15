@@ -176,3 +176,5 @@ ConfigModule.forRoot({
 $ npm install --save @nestjs/swagger swagger-ui-express
 - extender dtos:
 - import { PartialType } from "@nestjs/mapped-types";
+- create src/app.swagger.ts
+- edit nest-cli.json swagger plugin remove '/plugin'

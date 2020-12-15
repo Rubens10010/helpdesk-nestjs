@@ -1,11 +1,24 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { SoftwareProgram } from 'src/entity';
+import { Movement } from 'src/entity/movement.entity';
 import { CreateMovementDto } from './dto/create-movement.dto';
 import { UpdateMovementDto } from './dto/update-movement.dto';
+import { MovementRepository } from './movement.repository';
 
 @Injectable()
 export class MovementService {
-  create(createMovementDto: CreateMovementDto) {
-    return 'This action adds a new movement';
+  constructor(
+    @InjectRepository(Movement) 
+    private movementRepository: MovementRepository,
+  ) {}
+
+  async create(createMovementDto: CreateMovementDto) {
+    const movement = new SoftwareProgram();
+
+    await this.movementRepository.save(movement);
+
+    return movement;
   }
 
   findAll() {

@@ -13,20 +13,20 @@ import { Problem } from '.';
 import { FilePath } from './file_paths.entity';
 
 export enum TicketCondition {
-    Canceled = 0,
-    Open = 1,
-    Derived = 2,
-    Attending = 3,
-    Closed = 4,
-    Reopened = 5
+    CANCELED,
+    OPEN,
+    DERIVED,
+    ATTENDING,
+    CLOSED,
+    REOPENED
   }
 
 export enum TicketChannel {
-    Website = 0,
-    Application = 1,
-    Facebook = 2,
-    Gmail = 3,
-    Manual = 4
+    WEBSITE,
+    APPLICATION,
+    FACEBOOK,
+    GMAIL,
+    MANUAL
 }
 
 @Entity('tickets')
@@ -43,7 +43,7 @@ export class Ticket extends BaseEntity {
     @Column({ type: 'text', nullable: false })
     problem_description: string;
 
-    @Column({ nullable: false, default: TicketCondition.Open })
+    @Column({ nullable: false, default: TicketCondition.OPEN })
     status: TicketCondition;
 
     @OneToOne(type => FilePath, photo_1 => photo_1.ticket, {nullable: true})
@@ -69,7 +69,7 @@ export class Ticket extends BaseEntity {
     @Column({ type: 'smallint',  nullable: false })
     satisfaction: number;
 
-    @Column({ nullable: false, default: TicketChannel.Website })
+    @Column({ nullable: false, default: TicketChannel.WEBSITE })
     channel: TicketChannel;
 
     @Column({ type: 'boolean',  default: false })
