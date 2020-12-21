@@ -28,7 +28,8 @@ export class TicketsController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.ticketsService.remove(+id);
+  async remove(@Param('id') id: string) {
+    const result = await this.ticketsService.remove(+id);
+    return result.affected ? { message: "Eliminado Exitosamente"} : { error: true, message: "No se elimino!"};
   }
 }

@@ -12,7 +12,8 @@ import { Solution, Problem } from './index';
 
 @Entity('problem_solutions')
 export class ProblemSolutions extends BaseEntity {
-    @ManyToOne(() => Problem, (problem) => problem.id, {
+    @ManyToOne(
+        type => Problem, (problem) => problem.id, {
         primary: true,
         nullable: false,
         onUpdate: 'CASCADE',
@@ -21,7 +22,8 @@ export class ProblemSolutions extends BaseEntity {
     @JoinColumn({name: 'problem_id'})
     problem!: Problem;
 
-    @ManyToOne(() => Solution, (solution) => solution.id, {
+    @ManyToOne(
+        type => Solution, (solution) => solution.id, {
         primary: true,
         nullable: false,
         onUpdate: 'CASCADE',

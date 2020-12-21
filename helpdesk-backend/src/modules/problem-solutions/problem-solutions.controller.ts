@@ -17,18 +17,19 @@ export class ProblemSolutionsController {
     return this.problemSolutionsService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.problemSolutionsService.findOne(+id);
+  @Get('/p/:problem_id/s/:solution_id')
+  findOne(@Param('problem_id') problem_id: string, @Param('solution_id') solution_id: string) {
+    return this.problemSolutionsService.findOne(+problem_id, +solution_id);
   }
 
-  @Put(':id')
-  update(@Param('id') id: string, @Body() updateProblemSolutionDto: UpdateProblemSolutionDto) {
-    return this.problemSolutionsService.update(+id, updateProblemSolutionDto);
+  @Put()
+  update(@Body() updateProblemSolutionDto: UpdateProblemSolutionDto) {
+    return this.problemSolutionsService.update(updateProblemSolutionDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.problemSolutionsService.remove(+id);
+  @Delete('/p/:problem_id/s/:solution_id')
+  async remove(@Param('problem_id') problem_id: string, @Param('solution_id') solution_id: string) {
+    const result = await this.problemSolutionsService.remove(+problem_id, +solution_id);
+    return result.affected ? { message: "Eliminado Exitosamente"} : { error: true, message: "No se elimino!"};
   }
 }

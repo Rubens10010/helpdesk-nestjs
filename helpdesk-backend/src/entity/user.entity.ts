@@ -11,6 +11,7 @@ import {
 import { Exclude } from 'class-transformer';
 import { Colaborator } from './colaborator.entity';
 import { Solution } from './solution.entity';
+import { Ticket } from './ticket.entity';
 
 export enum UserStatus {
   DELETED,
@@ -56,4 +57,10 @@ export class User extends BaseEntity {
     solution => solution.proposer
   )
   solutions: Solution[];
+
+  @OneToMany(
+    type => Ticket,
+    ticket => ticket.user
+  )
+  tickets: Ticket[];
 }

@@ -5,8 +5,10 @@ import {
     BaseEntity,
     JoinColumn,
     ManyToOne,
+    OneToMany,
   } from 'typeorm';
-import { TechnicalArea, SoftwareProgram } from './index';
+import { TechnicalArea, SoftwareProgram, ProblemSolutions } from './index';
+import { Ticket } from './ticket.entity';
 
 @Entity('problems')
 export class Problem extends BaseEntity {
@@ -31,4 +33,16 @@ export class Problem extends BaseEntity {
       )
     @JoinColumn({ name: 'software_program_id' })
     software_program: SoftwareProgram
+
+    @OneToMany(
+      type => ProblemSolutions,
+      problem_solutions => problem_solutions.problem
+    )
+    solutions: ProblemSolutions[];
+
+    @OneToMany(
+      type => Ticket,
+      ticket => ticket.problem
+    )
+    tickets: Ticket[];
 }

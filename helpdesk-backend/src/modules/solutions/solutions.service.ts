@@ -1,26 +1,66 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException,  Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Solution, User } from 'src/entity';
 import { CreateSolutionDto } from './dto/create-solution.dto';
 import { UpdateSolutionDto } from './dto/update-solution.dto';
+import { SolutionsRepository } from './solutions.repository';
 
 @Injectable()
 export class SolutionsService {
-  create(createSolutionDto: CreateSolutionDto) {
-    return 'This action adds a new solution';
+  constructor(@InjectRepository(Solution) private solutionsRepository: SolutionsRepository) {}
+
+  async create(createSolutionDto: CreateSolutionDto) {
+    const solution = new Solution();
+    solution.content = createSolutionDto.content;
+    solution.short = createSolutionDto.short;
+    solution.help_url = createSolutionDto.help_url;
+
+    if(createSolutionDto.user_id){
+      const user = await User.findOne(createSolutionDto.user_id);
+      if(!user){
+        throw new BadRequestException(`User with id ${createSolutionDto.user_id} does not exists`);
+      }
+      solution.proposer = user;
+    }
+
+    await this.solutionsRepository.save(solution);
+
+    return solution;
   }
 
-  findAll() {
-    return `This action returns all solutions`;
+  async findAll() {
+    const solutions: Solution[] = await this.solutionsRepository.find();
+
+    return solutions;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} solution`;
+  async findOne(id: number) {
+    const solution: Solution = await this.solutionsRepository.findOne(id);
+
+    return solution;
   }
 
-  update(id: number, updateSolutionDto: UpdateSolutionDto) {
-    return `This action updates a #${id} solution`;
+  async update(id: number, updateSolutionDto: UpdateSolutionDto) {
+    const solution = await this.findOne(id);
+
+    // check which properties are set in the dto
+    solution.content = updateSolutionDto.content || solution.content;
+    solution.short = updateSolutionDto.short || solution.short;
+    solution.help_url = updateSolutionDto.help_url || solution.help_url;
+    if(updateSolutionDto.user_id){
+      const user = await User.findOne(updateSolutionDto.user_id);
+      if(!user){
+        throw new BadRequestException(`User with id ${updateSolutionDto.user_id} does not exists`);
+      }
+      solution.proposer = user;
+    }
+
+    await this.solutionsRepository.save(solution);
+
+    return solution;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} solution`;
+  async remove(id: number) {
+    return await this.solutionsRepository.delete(id);
   }
 }

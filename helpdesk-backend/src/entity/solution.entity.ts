@@ -5,7 +5,9 @@ import {
     BaseEntity,
     JoinColumn,
     ManyToOne,
+    OneToMany,
   } from 'typeorm';
+import { ProblemSolutions } from '.';
 import { User } from './user.entity';
 
 @Entity('solutions')
@@ -28,4 +30,10 @@ export class Solution extends BaseEntity {
       )
     @JoinColumn({ name: 'user_id' })
     proposer: User
+
+    @OneToMany(
+      type => ProblemSolutions,
+      problem_solutions => problem_solutions.solution
+    )
+    problems: ProblemSolutions[];
 }

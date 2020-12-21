@@ -3,14 +3,22 @@ import {
     PrimaryGeneratedColumn,
     Column,
     BaseEntity,
-    OneToMany,
     OneToOne,
     JoinColumn,
     CreateDateColumn,
     UpdateDateColumn,
+    ManyToOne,
 } from 'typeorm';
-import { Problem } from '.';
+import { Problem, User } from '.';
 import { FilePath } from './file_paths.entity';
+
+/***************** IMPORTANT **************************************
+/   CREATE SEQUENCE IN POSTGRES FOR TICKET NUMBERING
+/   > CREATE SEQUENCE ticket_number_generator START 1000000;
+/   > SELECT last_value FROM ticket_number_generator;
+/   > SELECT nextval('ticket_number_generator');
+/   > ALTER SEQUENCE ticket_number_generator RESTART WITH 1000000;
+/*****************************************************************/
 
 export enum TicketCondition {
     CANCELED,
@@ -66,7 +74,7 @@ export class Ticket extends BaseEntity {
     @Column({ type: "timestamp without time zone", nullable: true })
     reopened_at: Date;
 
-    @Column({ type: 'smallint',  nullable: false })
+    @Column({ type: 'smallint',  nullable: true })
     satisfaction: number;
 
     @Column({ nullable: false, default: TicketChannel.WEBSITE })
@@ -75,9 +83,19 @@ export class Ticket extends BaseEntity {
     @Column({ type: 'boolean',  default: false })
     scaled: boolean;
 
-    @OneToMany(
+    @ManyToOne(
         type => Problem,
-        problem => problem.software_program
-    )
-    problems: Problem[];
+        problem => problem.tickets,
+        { nullable: false }
+      )
+    @JoinColumn({ name: 'problem_id' })
+    problem: Problem
+
+    @ManyToOne(
+        type => User,
+        user => user.tickets,
+        { nullable: false }
+      )
+    @JoinColumn({ name: 'user_id' })
+    user: User
 }

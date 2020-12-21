@@ -28,7 +28,13 @@ export class SolutionsController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.solutionsService.remove(+id);
+  async remove(@Param('id') id: string) {
+    const result = await this.solutionsService.remove(+id);
+    if(result.affected === 0) {
+      return { error: true, message: "No se elimino, no existe en la base de datos!" }
+    }
+    return {
+      message: "Eliminado exitosamente"
+    };
   }
 }
