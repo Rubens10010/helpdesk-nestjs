@@ -1,6 +1,6 @@
 import { BadRequestException,  Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Solution, User } from 'src/entity';
+import { Colaborator, Solution } from 'src/entity';
 import { CreateSolutionDto } from './dto/create-solution.dto';
 import { UpdateSolutionDto } from './dto/update-solution.dto';
 import { SolutionsRepository } from './solutions.repository';
@@ -15,12 +15,12 @@ export class SolutionsService {
     solution.short = createSolutionDto.short;
     solution.help_url = createSolutionDto.help_url;
 
-    if(createSolutionDto.user_id){
-      const user = await User.findOne(createSolutionDto.user_id);
-      if(!user){
-        throw new BadRequestException(`User with id ${createSolutionDto.user_id} does not exists`);
+    if(createSolutionDto.colaborator_id){
+      const colaborator = await Colaborator.findOne(createSolutionDto.colaborator_id);
+      if(!colaborator){
+        throw new BadRequestException(`User with id ${createSolutionDto.colaborator_id} does not exists`);
       }
-      solution.proposer = user;
+      solution.colaborator = colaborator;
     }
 
     await this.solutionsRepository.save(solution);
@@ -47,12 +47,12 @@ export class SolutionsService {
     solution.content = updateSolutionDto.content || solution.content;
     solution.short = updateSolutionDto.short || solution.short;
     solution.help_url = updateSolutionDto.help_url || solution.help_url;
-    if(updateSolutionDto.user_id){
-      const user = await User.findOne(updateSolutionDto.user_id);
-      if(!user){
-        throw new BadRequestException(`User with id ${updateSolutionDto.user_id} does not exists`);
+    if(updateSolutionDto.colaborator_id){
+      const colaborator = await Colaborator.findOne(updateSolutionDto.colaborator_id);
+      if(!colaborator){
+        throw new BadRequestException(`User with id ${updateSolutionDto.colaborator_id} does not exists`);
       }
-      solution.proposer = user;
+      solution.colaborator = colaborator;
     }
 
     await this.solutionsRepository.save(solution);

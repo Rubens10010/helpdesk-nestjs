@@ -28,7 +28,7 @@ export class Attention extends BaseEntity {
     code: string;
 
     @Column({ type: 'varchar', nullable: false, length: 255 })
-    extra_message: string;
+    subject: string;
 
     @CreateDateColumn({ name: 'created_at' })
     created_at: Date;

@@ -53,12 +53,6 @@ export class User extends BaseEntity {
   colaborator: Colaborator
 
   @OneToMany(
-    type => Solution,
-    solution => solution.proposer
-  )
-  solutions: Solution[];
-
-  @OneToMany(
     type => Ticket,
     ticket => ticket.user
   )

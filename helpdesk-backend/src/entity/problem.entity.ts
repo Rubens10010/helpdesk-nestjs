@@ -29,7 +29,8 @@ export class Problem extends BaseEntity {
 
     @ManyToOne(
         type => SoftwareProgram,
-        softwareProgram => softwareProgram.problems
+        softwareProgram => softwareProgram.problems,
+        { nullable: true }
       )
     @JoinColumn({ name: 'software_program_id' })
     software_program: SoftwareProgram

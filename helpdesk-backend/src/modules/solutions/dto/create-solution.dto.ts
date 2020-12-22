@@ -28,5 +28,5 @@ export class CreateSolutionDto {
 
     @IsDefined()
     @IsInt()
-    user_id: number
+    colaborator_id: number
 }

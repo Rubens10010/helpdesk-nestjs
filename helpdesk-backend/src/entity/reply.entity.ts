@@ -30,13 +30,11 @@ export class Reply extends BaseEntity {
 
     @ManyToOne(
         type => Attention,
-        attention => attention.replies
+        attention => attention.replies,
+        { nullable: false }
       )
     @JoinColumn({ name: 'attention_id' })
     attention: Attention
-
-    @Column({ type: 'varchar', nullable: false, length: 100 })
-    title: string;
 
     @Column({ type: 'text', nullable: false })
     message: string;
@@ -45,7 +43,7 @@ export class Reply extends BaseEntity {
     source: ReplySource;
 
     @Column({ nullable: false, default: ReplyCondition.CREATED })
-    status: ReplyCondition;
+    condition: ReplyCondition;
 
     @CreateDateColumn({ name: 'created_at' })
     created_at: Date;

@@ -26,7 +26,7 @@ import { Problem } from './problem.entity';
     @Column({ type: 'varchar', nullable: false, length: 191 })
     email: string;
   
-    @Column({ nullable: true, length: 40, unique: true })
+    @Column({ nullable: true, length: 40 })
     phone: string;
   
     @Column({ nullable: false, default: TechnicalAreaStatus.CREATED })

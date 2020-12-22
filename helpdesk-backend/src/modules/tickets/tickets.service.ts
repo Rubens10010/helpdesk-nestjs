@@ -29,11 +29,10 @@ export class TicketsService {
       if(!problem){
         throw new BadRequestException(`Problem with id ${createTicketDto.problem_id} does not exists`);
       }
-      console.log(problem);
       ticket.problem = problem;
     }
 
-    if(createTicketDto.photo_1_id){
+    /*if(createTicketDto.photo_1_id){
       const photo_1 = await FilePath.findOne(createTicketDto.photo_1_id);
       if(!photo_1){
         throw new BadRequestException(`Photo #1 with id ${createTicketDto.photo_1_id} does not exists or wasn't uploaded yet.`);
@@ -47,7 +46,7 @@ export class TicketsService {
         throw new BadRequestException(`Photo #2 with id ${createTicketDto.photo_2_id} does not exists or wasn't uploaded yet.`);
       }
       ticket.photo_2 = photo_2;
-    }
+    }*/
 
     ticket.code = await this.ticketNumberGenerator.getNextTicketNumber();
     await this.ticketsRepository.save(ticket);

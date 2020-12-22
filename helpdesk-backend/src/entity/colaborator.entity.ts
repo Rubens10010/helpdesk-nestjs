@@ -11,6 +11,7 @@ import {
     OneToMany,
   } from 'typeorm';
 import { Movement } from './movement.entity';
+import { Solution } from './solution.entity';
 import { TechnicalArea } from './technical_area.entity';
 import { User } from './user.entity';
   
@@ -24,7 +25,11 @@ import { User } from './user.entity';
     @PrimaryGeneratedColumn('increment')
     id: number;
 
-    @OneToOne(type => User)
+    @OneToOne(
+      type => User,
+      (user) => user.colaborator,
+      { nullable: false}
+    )
     @JoinColumn({ name: 'user_id' })
     profile: User
 
@@ -59,5 +64,11 @@ import { User } from './user.entity';
       movement => movement.colaborator
     )
     movements: Movement[];
+
+    @OneToMany(
+      type => Solution,
+      solution => solution.colaborator
+    )
+    solutions: Solution[];
   }
   

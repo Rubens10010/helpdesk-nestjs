@@ -9,9 +9,7 @@ import {
     JoinColumn,
     OneToOne,
 } from 'typeorm';
-import { Attention } from './attention.entity';
-import { Colaborator } from './colaborator.entity';
-import { TechnicalArea } from './technical_area.entity';
+import { Attention, Colaborator, TechnicalArea, Ticket } from './index';
 
 export enum MovementCondition {
     CREATED,
@@ -26,12 +24,20 @@ export class Movement extends BaseEntity {
     @PrimaryGeneratedColumn('increment')
     id: number;
 
-    @OneToOne(type => Movement)
+    @OneToOne(type => Movement, (movement) => movement.child, { nullable: true })
     @JoinColumn({ name: 'last_id' })
-    parent: Movement
+    parent: Movement;
 
     @OneToOne(type => Movement)
-    child: Movement
+    child: Movement;
+
+    @ManyToOne(
+      type => Ticket,
+      ticket => ticket.movements,
+      { nullable: false }
+    )
+    @JoinColumn({ name: 'ticket_id' })
+    ticket: Ticket;
 
     @ManyToOne(
         type => TechnicalArea,
@@ -39,13 +45,13 @@ export class Movement extends BaseEntity {
         { nullable: false }
       )
     @JoinColumn({ name: 'technical_area_id' })
-    technical_area: TechnicalArea
+    technical_area: TechnicalArea;
 
     @Column({ type: 'smallint', nullable: false, default: 0 })
     priority: number;
 
     @Column({ nullable: false, default: MovementCondition.CREATED })
-    status: MovementCondition;
+    condition: MovementCondition;
 
     @CreateDateColumn({ name: 'created_at' })
     created_at: Date;

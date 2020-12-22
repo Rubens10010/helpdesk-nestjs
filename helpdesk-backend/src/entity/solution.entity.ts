@@ -7,7 +7,7 @@ import {
     ManyToOne,
     OneToMany,
   } from 'typeorm';
-import { ProblemSolutions } from '.';
+import { Colaborator, ProblemSolutions } from '.';
 import { User } from './user.entity';
 
 @Entity('solutions')
@@ -18,18 +18,19 @@ export class Solution extends BaseEntity {
     @Column({ type: 'text', nullable: false })
     content: string;
 
-    @Column({ type: 'varchar', nullable: false, length: 100 })
+    @Column({ type: 'varchar', nullable: true, length: 100 })
     short: string;
 
     @Column({ type: 'varchar', nullable: true, length: 191 })
     help_url: string;
 
     @ManyToOne(
-        type => User,
-        proposer => proposer.solutions
+        type => Colaborator,
+        colaborator => colaborator.solutions,
+        { nullable: false }
       )
-    @JoinColumn({ name: 'user_id' })
-    proposer: User
+    @JoinColumn({ name: 'colaborator_id' })
+    colaborator: Colaborator
 
     @OneToMany(
       type => ProblemSolutions,

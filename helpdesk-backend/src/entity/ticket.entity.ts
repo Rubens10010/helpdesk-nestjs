@@ -1,3 +1,4 @@
+import { Movement } from './index';
 import {
     Entity,
     PrimaryGeneratedColumn,
@@ -8,9 +9,11 @@ import {
     CreateDateColumn,
     UpdateDateColumn,
     ManyToOne,
+    OneToMany,
 } from 'typeorm';
 import { Problem, User } from '.';
 import { FilePath } from './file_paths.entity';
+import { TicketFiles } from './ticket_files.entity';
 
 /***************** IMPORTANT **************************************
 /   CREATE SEQUENCE IN POSTGRES FOR TICKET NUMBERING
@@ -48,19 +51,27 @@ export class Ticket extends BaseEntity {
     @Column({ type: 'smallint',  nullable: false })
     year: number;
 
+    @ManyToOne(
+      type => Problem,
+      problem => problem.tickets,
+      { nullable: false }
+    )
+    @JoinColumn({ name: 'problem_id' })
+    problem: Problem
+
+    @ManyToOne(
+        type => User,
+        user => user.tickets,
+        { nullable: false }
+      )
+    @JoinColumn({ name: 'user_id' })
+    user: User
+
     @Column({ type: 'text', nullable: false })
     problem_description: string;
 
     @Column({ nullable: false, default: TicketCondition.OPEN })
-    status: TicketCondition;
-
-    @OneToOne(type => FilePath, photo_1 => photo_1.ticket, {nullable: true})
-    @JoinColumn({ name: 'photo_1_id'})
-    photo_1: FilePath
-
-    @OneToOne(type => FilePath, photo_2 => photo_2.ticket, {nullable: true})
-    @JoinColumn({ name: 'photo_2_id' })
-    photo_2: FilePath
+    condition: TicketCondition;
 
     @CreateDateColumn({ name: 'created_at' })
     created_at: Date;
@@ -83,19 +94,15 @@ export class Ticket extends BaseEntity {
     @Column({ type: 'boolean',  default: false })
     scaled: boolean;
 
-    @ManyToOne(
-        type => Problem,
-        problem => problem.tickets,
-        { nullable: false }
-      )
-    @JoinColumn({ name: 'problem_id' })
-    problem: Problem
+    @OneToMany(
+      type => Movement,
+      (movement) => movement.ticket
+    )
+    movements: Movement[];
 
-    @ManyToOne(
-        type => User,
-        user => user.tickets,
-        { nullable: false }
-      )
-    @JoinColumn({ name: 'user_id' })
-    user: User
+    @OneToMany(
+      type => TicketFiles,
+      (ticket_file) => ticket_file.ticket
+    )
+    files_attached: TicketFiles[];
 }

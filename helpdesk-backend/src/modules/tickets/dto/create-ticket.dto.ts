@@ -20,13 +20,13 @@ export class CreateTicketDto {
     })
     problem_description: string;
 
-    @IsOptional()
+    /*@IsOptional()
     @IsInt()
     photo_1_id?: number;
 
     @IsOptional()
     @IsInt()
-    photo_2_id?: number;
+    photo_2_id?: number;*/
 
     /*@IsNumber()
     @Min(1)

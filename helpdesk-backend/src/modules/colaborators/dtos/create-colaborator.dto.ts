@@ -1,4 +1,4 @@
-import { IsBoolean, IsEnum, IsInt, IsString } from "class-validator";
+import { IsBoolean, IsDefined, IsEnum, IsInt, IsString } from "class-validator";
 import { ColaboratorStatus } from "src/entity/colaborator.entity";
 import { EnumToString } from 'src/helpers/enumToString'
 
@@ -18,6 +18,7 @@ export class CreateColaboratorDTO {
     @IsInt()
     readonly technical_area_id: number;
 
+    @IsDefined()
     @IsEnum(ColaboratorStatus, {
         message: `Opcion invalida. Las opciones correctas son "${ EnumToString(ColaboratorStatus)}"`
     })

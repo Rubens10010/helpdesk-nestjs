@@ -5,8 +5,10 @@ import {
     BaseEntity,
     OneToOne,
     CreateDateColumn,
+    OneToMany,
 } from 'typeorm';
 import { Ticket } from './ticket.entity';
+import { TicketFiles } from './ticket_files.entity';
   
 @Entity('file_paths')
 export class FilePath extends BaseEntity {
@@ -25,6 +27,17 @@ export class FilePath extends BaseEntity {
     @CreateDateColumn({ name: 'created_at' })
     created_at: Date;
 
-    @OneToOne(type => Ticket)
-    ticket: Ticket
+    /*@OneToOne(type => Ticket)
+    ticket: Ticket*/
+
+    @Column({type: 'boolean', default: true})
+    status: boolean;
+
+    /*@OneToMany(
+        type => TicketFiles,
+        (ticket_file) => ticket_file.file_path
+      )
+    tickets: TicketFiles[];*/
+    @OneToOne(type => TicketFiles)
+    ticket_file: TicketFiles
 }
