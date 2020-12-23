@@ -8,11 +8,6 @@ export class CreateReplyDto {
     attention_id: number;
 
     @IsString()
-    @MinLength(10)
-    @MaxLength(100)
-    title: string;
-
-    @IsString()
     @MinLength(2)
     @MaxLength(500)
     message: string;

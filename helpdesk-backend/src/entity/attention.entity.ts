@@ -8,6 +8,7 @@ import {
     UpdateDateColumn,
     ManyToOne,
     OneToMany,
+    PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Movement } from './movement.entity';
 import { ProblemSolutions } from './problem_solutions.entity';
@@ -15,8 +16,11 @@ import { Reply } from './reply.entity';
   
 @Entity('attentions')
 export class Attention extends BaseEntity {
+    @PrimaryGeneratedColumn('increment')
+    id: number;
+
     @OneToOne(() => Movement, (movement) => movement.id, {
-        primary: true,
+        //primary: true,
         nullable: false,
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',

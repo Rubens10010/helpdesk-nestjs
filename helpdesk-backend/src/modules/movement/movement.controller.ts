@@ -3,7 +3,7 @@ import { MovementService } from './movement.service';
 import { CreateMovementDto } from './dto/create-movement.dto';
 import { UpdateMovementDto } from './dto/update-movement.dto';
 
-@Controller('movement')
+@Controller('movements')
 export class MovementController {
   constructor(private readonly movementService: MovementService) {}
 

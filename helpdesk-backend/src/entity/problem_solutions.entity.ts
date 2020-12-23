@@ -6,15 +6,19 @@ import {
     ManyToOne,
     CreateDateColumn,
     OneToMany,
+    PrimaryGeneratedColumn,
   } from 'typeorm';
 import { Attention } from './attention.entity';
 import { Solution, Problem } from './index';
 
 @Entity('problem_solutions')
 export class ProblemSolutions extends BaseEntity {
+    @PrimaryGeneratedColumn('increment')
+    id: number;
+
     @ManyToOne(
         type => Problem, (problem) => problem.id, {
-        primary: true,
+        //primary: true,
         nullable: false,
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
@@ -24,7 +28,7 @@ export class ProblemSolutions extends BaseEntity {
 
     @ManyToOne(
         type => Solution, (solution) => solution.id, {
-        primary: true,
+        //primary: true,
         nullable: false,
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',

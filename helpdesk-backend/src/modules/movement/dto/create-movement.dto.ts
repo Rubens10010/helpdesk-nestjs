@@ -1,8 +1,13 @@
 import { IsBoolean, IsDefined, IsInt,  IsNumber, IsOptional, Max, Min } from "class-validator";
 
 export class CreateMovementDto {
+    @IsDefined()
     @IsInt()
-    last_id: number;
+    ticket_id!: number;
+
+    @IsOptional()
+    @IsInt()
+    last_id?: number;
 
     @IsDefined()
     @IsInt()

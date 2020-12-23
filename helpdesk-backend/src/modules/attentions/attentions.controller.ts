@@ -28,7 +28,14 @@ export class AttentionsController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.attentionsService.remove(+id);
+  async remove(@Param('id') id: string) {
+    const resp = await this.attentionsService.remove(+id);
+
+    if(resp.affected === 0) {
+      return { error: true, message: "No se elimino, no existe en la base de datos!" }
+    }
+    return {
+      message: "Eliminado exitosamente"
+    };
   }
 }

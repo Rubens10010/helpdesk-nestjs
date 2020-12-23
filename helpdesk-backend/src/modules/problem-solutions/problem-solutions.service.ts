@@ -43,18 +43,20 @@ export class ProblemSolutionsService {
     return problemSolutions;
   }
 
-  async findOne(problem_id: number, solution_id: number) {
-    const problemSolution: ProblemSolutions = await this.problemSolutionsRepository.findOne({
+  async findOne(id: number) {
+    const problemSolution: ProblemSolutions = await this.problemSolutionsRepository.findOne(id, { relations: ['problem', 'solution'] });
+    /*
+    {
       where: {
         solution: solution_id, problem: problem_id
       }
-    });
+    }*/
 
     return problemSolution;
   }
 
-  async update( updateProblemSolutionDto: UpdateProblemSolutionDto) {
-    const problem_solution = await this.findOne(updateProblemSolutionDto.problem_id, updateProblemSolutionDto.solution_id);
+  async update(id: number, updateProblemSolutionDto: UpdateProblemSolutionDto) {
+    const problem_solution = await this.findOne(id);
     const problem = await Problem.findOne(updateProblemSolutionDto.problem_id);
 
     if(!problem){
@@ -76,14 +78,15 @@ export class ProblemSolutionsService {
     return problem_solution;
   }
 
-  async remove(problem_id: number, solution_id: number) {
-    return await this.problemSolutionsRepository.delete({
+  async remove(id: number) {
+    /*return await this.problemSolutionsRepository.delete({
       problem: {
         id: problem_id
       },
       solution: {
         id: solution_id
       }
-    });
+    });*/
+    return await this.problemSolutionsRepository.delete(id);
   }
 }

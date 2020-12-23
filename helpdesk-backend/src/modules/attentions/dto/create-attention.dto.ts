@@ -1,4 +1,4 @@
-import { IsBoolean, IsDefined, IsInt, IsNumber, IsOptional, IsString, Max, MaxLength, Min } from "class-validator";
+import { IsDefined, IsInt, IsNumber,  IsString, Max, MaxLength, Min } from "class-validator";
 
 export class CreateAttentionDto {
     @IsDefined()
@@ -6,27 +6,15 @@ export class CreateAttentionDto {
     movement_id!: number;
 
     @IsString()
-    code: string;
-
-    @IsString()
     @MaxLength(255)
-    extra_message: string;
-  
-    @IsOptional()
-    @IsBoolean()
-    replied?: boolean;
+    subject: string;
 
-    @IsNumber()
-    @Min(1)
-    @Max(5)
-    satisfaction: number;
+    @IsDefined()
+    @IsInt()
+    problem_solution_id: number;
 
     @IsNumber()
     @Min(1)
     @Max(5)
     reopen_attention: number;
-
-    @IsDefined()
-    @IsInt()
-    problem_solution_id: number;
 }

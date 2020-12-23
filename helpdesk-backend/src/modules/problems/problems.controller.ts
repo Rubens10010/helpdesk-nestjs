@@ -30,7 +30,8 @@ export class ProblemsController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.problemsService.remove(+id);
+  async remove(@Param('id') id: string) {
+    const result = await this.problemsService.remove(+id);
+    return result.affected ? { message: "Eliminado Exitosamente"} : { error: true, message: "No se elimino!"};
   }
 }
