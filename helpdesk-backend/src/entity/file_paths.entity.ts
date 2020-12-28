@@ -5,15 +5,21 @@ import {
     BaseEntity,
     OneToOne,
     CreateDateColumn,
-    OneToMany,
 } from 'typeorm';
-import { Ticket } from './ticket.entity';
 import { TicketFiles } from './ticket_files.entity';
-  
+
+export enum FileCondition {
+    UNLINKED,
+    LINKED,
+    DELETED
+  }
+
 @Entity('file_paths')
 export class FilePath extends BaseEntity {
-    @PrimaryGeneratedColumn('increment')
-    id: number;
+    /*@PrimaryGeneratedColumn('increment')
+    id: number;*/
+    @PrimaryGeneratedColumn('uuid')
+    id: string;
 
     @Column({ type: 'varchar', nullable: false, length: 191 })
     name: string;
@@ -24,14 +30,21 @@ export class FilePath extends BaseEntity {
     @Column({ type: 'varchar', nullable: false, length: 255 })
     url: string;
 
-    @CreateDateColumn({ name: 'created_at' })
+    @Column({ type: 'smallint', nullable: false })
+    size: number;
+
+    @CreateDateColumn({ name: 'created_at', transformer: {
+      to: (value: Date) => value,
+      from: (value: Date) => value.toLocaleString()
+    } })
     created_at: Date;
 
     /*@OneToOne(type => Ticket)
     ticket: Ticket*/
 
-    @Column({type: 'boolean', default: true})
-    status: boolean;
+
+    @Column({ nullable: false, default: FileCondition.UNLINKED })
+    condition: FileCondition;
 
     /*@OneToMany(
         type => TicketFiles,

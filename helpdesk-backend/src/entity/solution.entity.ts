@@ -8,7 +8,6 @@ import {
     OneToMany,
   } from 'typeorm';
 import { Colaborator, ProblemSolutions } from '.';
-import { User } from './user.entity';
 
 @Entity('solutions')
 export class Solution extends BaseEntity {

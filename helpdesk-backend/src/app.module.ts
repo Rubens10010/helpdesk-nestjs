@@ -18,6 +18,7 @@ import { ReplyModule } from './modules/reply/reply.module';
 import { SoftwareProgramsModule } from './modules/software-programs/software-programs.module';
 import { SolutionsModule } from './modules/solutions/solutions.module';
 import { TicketsModule } from './modules/tickets/tickets.module';
+import { TicketFilesModule } from './modules/ticket_files/ticket_files.module';
 
 @Module({
   imports: [
@@ -46,6 +47,7 @@ import { TicketsModule } from './modules/tickets/tickets.module';
     SoftwareProgramsModule,
     SolutionsModule,
     TicketsModule,
+    TicketFilesModule
   ],
   controllers: [AppController],
   providers: [AppService],

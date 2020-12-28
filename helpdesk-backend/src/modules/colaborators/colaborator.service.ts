@@ -22,7 +22,7 @@ export class ColaboratorService {
   public async getOne(id: number) {
     const colaborator: Colaborator = await this.colaboratorRepository.findOne(id);
 
-    if (!id)
+    if (!colaborator)
       throw new NotFoundException(`Task with the id ${id} was not found`);
 
     return colaborator;
