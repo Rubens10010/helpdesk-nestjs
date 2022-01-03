@@ -16,6 +16,12 @@ export const imageFileFilter = (req, file, callback) => {
   callback(null, true);
 };
 
+/**
+ * This function gives the name to new file uploaded. Name salt should be set in frontend.
+ * @param req Request containing body
+ * @param file File sent
+ * @param callback function to call after
+ */
 export const editFileName = (req, file, callback) => {
   /*const name = file.originalname.split('.')[0];
   const fileExtName = extname(file.originalname);
@@ -25,11 +31,17 @@ export const editFileName = (req, file, callback) => {
     .join('');
   callback(null, `${name}${randomName}${fileExtName}`);*/
   let req_filename = req.body.name;
-    const filename = req_filename.split('.')[0];
-    const fileExtName = extname(file.originalname);
+  const filename = req_filename.split('.')[0];
+  const fileExtName = extname(file.originalname);
   callback(null, `${filename}${fileExtName}`);
 };
 
+/**
+ * Returns a path to local storage directory mapped for current date.
+ * @param req Request object
+ * @param file File sent
+ * @param cb callback function
+ */
 export const getDestinationPath = (req, file, cb) => {
     let req_filename = req.body.name;
     const filename = req_filename.split('.')[0];

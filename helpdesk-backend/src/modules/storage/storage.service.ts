@@ -12,4 +12,14 @@ export class StorageService {
     const filedata =  fs.readFileSync(path)
     return filedata;
   }
+
+  removeFile(path: string)
+  {
+    try {
+      fs.unlinkSync(path);
+    } catch(err) {
+      console.log(err);
+      throw err;
+    }
+  }
 }
